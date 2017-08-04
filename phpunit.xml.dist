@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="http://phpunit.de/phpunit.xsd"
+         backupGlobals="false"
+         bootstrap="vendor/autoload.php"
+         colors="true"
+         verbose="true">
+    <listeners>
+        <listener class="ClawRock\Slack\Test\ProfilingTestListener" file="tests/ProfilingTestListener.php"/>
+    </listeners>
+
+    <testsuite name="test">
+        <directory suffix="Test.php">tests</directory>
+    </testsuite>
+
+    <logging>
+        <log type="coverage-text" target="php://stdout"/>
+    </logging>
+
+    <filter>
+        <whitelist processUncoveredFilesFromWhitelist="true">
+            <directory suffix=".php">src</directory>
+        </whitelist>
+    </filter>
+    <php>
+        <env name="EMPTY_IP" value="http://172.255.255.254"/>
+        <ini name="default_socket_timeout" value="2"/>
+    </php>
+</phpunit>

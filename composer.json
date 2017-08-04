@@ -1,0 +1,38 @@
+{
+    "name": "clawrock/slack-api",
+    "homepage": "http://clawrock.com/",
+    "description": "Slack Integration",
+    "keywords": [
+        "Slack",
+        "Integration",
+        "clawrock"
+    ],
+    "minimum-stability": "stable",
+    "authors": [{
+        "name": "cr-team <office@clawrock.com>",
+        "homepage": "http://clawrock.com/",
+        "role": "Developer"
+    }],
+    "license": "Apache-2.0",
+    "type": "library",
+    "require": {
+        "php": ">=5.5",
+        "monolog/monolog": "1.*",
+        "marc-mabe/php-enum": "^2.3"
+    },
+    "require-dev": {
+        "phpdocumentor/phpdocumentor": "2.*",
+        "phpunit/phpunit": "4.*",
+        "sebastian/phpcpd": "2.*"
+    },
+    "autoload": {
+        "psr-4": {
+            "ClawRock\\Slack\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "ClawRock\\Slack\\Test\\": "tests"
+        }
+    }
+}

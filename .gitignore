@@ -1,0 +1,15 @@
+node_modules
+bower_components
+*.log
+phpunit.xml
+
+vendor
+composer.lock
+composer.phar
+
+/.idea
+
+_lint
+doc/
+.idea/
+dist/

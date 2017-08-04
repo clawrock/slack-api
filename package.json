@@ -1,0 +1,23 @@
+{
+  "name": "slack-api",
+  "version": "1.0.0",
+  "author": "clawrock",
+  "homepage": "https://github.com/clawrock/slack-api",
+  "bugs": "https://github.com/clawrock/slack-api/issues",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/clawrock/slack-api.git"
+  },
+  "engines": {
+    "node": ">= 0.10.0"
+  },
+  "devDependencies": {
+    "grunt": "~0.4",
+    "grunt-shell": "~0.7",
+    "grunt-phplint": "~0.0",
+    "grunt-phpunit": "~0.3",
+    "grunt-version": "~1.0",
+    "load-grunt-tasks": "~3.1",
+    "time-grunt": "~1.1"
+  }
+}

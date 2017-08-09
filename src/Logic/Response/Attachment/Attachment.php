@@ -30,9 +30,9 @@ class Attachment implements \JsonSerializable
     }
 
     /**
-     * @param Action $action
+     * @param Button $action
      */
-    public function addAction(Action $action)
+    public function addAction(ActionInterface $action)
     {
         $this->data['actions'] = $action;
     }

@@ -2,25 +2,29 @@
 
 namespace ClawRock\Slack\Logic\Response\Attachment;
 
-class Action implements \JsonSerializable
+use ClawRock\Slack\Common\Enum\ActionType;
+
+class Action
 {
+    /**
+     * @var array
+     */
     protected $data;
 
     /**
      * Action constructor.
-     * @param        $name
-     * @param        $text
-     * @param string $type
+     * @param ActionType $actionType
+     * @param            $name
+     * @param            $text
      */
-    public function __construct($name, $text, $type = 'button')
+    public function __construct(ActionType $actionType, $name, $text)
     {
         $this->throwExceptionIfTypeNotValid($name, 'string');
         $this->throwExceptionIfTypeNotValid($text, 'string');
-        $this->throwExceptionIfTypeNotValid($type, 'string');
 
         $this->data['name'] = $name;
         $this->data['text'] = $text;
-        $this->data['type'] = $type;
+        $this->data['type'] = $actionType->getValue();
     }
 
     /**

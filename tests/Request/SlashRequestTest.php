@@ -38,7 +38,7 @@ class RequestTest extends \PHPUnit_Framework_TestCase
         $response = new Response(new MessageData());
         $response->setMessageData($messageData);
 
-        $this->assertEquals('{"text":"text"}', $response->__toString());
+        $this->assertEquals('{"text":"text","response_type":"ephemeral"}', $response->__toString());
 
     }
 }

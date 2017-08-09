@@ -17,7 +17,7 @@ class ResponseBuilderTest extends \PHPUnit_Framework_TestCase
         $attachment->addField(new Field('title', 'value', true));
         $messageDataBuilder->addAttachment($attachment);
         $messageData = $messageDataBuilder->create();
-        $this->assertEquals('{"text":"text","attachments":[{"text":"text","fields":{"title":"title","value":"value","short":true}}]}',
+        $this->assertEquals('{"text":"text","attachments":[{"text":"text","fields":{"title":"title","value":"value","short":true}}],"response_type":"ephemeral"}',
             json_encode($messageData));
     }
 
@@ -128,7 +128,7 @@ class ResponseBuilderTest extends \PHPUnit_Framework_TestCase
         $messageDataBuilder1->setResponseType(ResponseType::IN_CHANNEL());
         $response2 = $messageDataBuilder1->create()->toResponse();
 
-        $this->assertEquals(ResponseType::EPHEMERAL,$response1->getResponseType());
-        $this->assertEquals(ResponseType::IN_CHANNEL, $response2->getResponseType());
+        $this->assertEquals(ResponseType::EPHEMERAL(), $response1->getResponseType());
+        $this->assertEquals(ResponseType::IN_CHANNEL(), $response2->getResponseType());
     }
 }

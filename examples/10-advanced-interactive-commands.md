@@ -26,21 +26,21 @@ There are some things you need to know about interactive buttons.
 
     >A plaintext message displayed to users using an interface that does not support attachments or interactive messages. Consider leaving a URL pointing to your service if the potential message actions are representable outside of Slack. Otherwise, let folks know what they are missing.
 
-2. There is a helper Answer class available from Factory's answer($name, $value) method. It allows you to control which button was clicked. It does not have inner logic except for simple if.
+2. There is a helper Answer class available from Factory's buttonAnswer($name) method. It allows you to control which button was clicked. It does not have inner logic except for simple if.
 
     ```php
     use ClawRock\Slack\SlackFactory;
     
     $command = SlackFactory::interactiveCommand('your-app-token');
     $command->on('marry-question')
-        ->run(SlackFactory::answer('marry-me', 'yes')
+        ->run(SlackFactory::buttonAnswer('marry-me', 'yes')
             ->setRun(
                 function ($req, $res) {
                     $res->setEmoji('smile');
                     $res->addText('Good');
                 }
             ))
-        ->run(SlackFactory::answer('marry-me', 'no')
+        ->run(SlackFactory::buttonAnswer('marry-me', 'no')
             ->setRun(
                 function ($req, $res) {
                     $res->setEmoji('cry');

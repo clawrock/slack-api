@@ -90,14 +90,6 @@ class SlashRequest extends AbstractRequest
         return $this->getRequestData('command');
     }
 
-    /**
-     * @return string
-     */
-    public function getResponseUrl()
-    {
-        return $this->getRequestData('response_url');
-    }
-
     public function getCommandParameterString()
     {
         return $this->getText();

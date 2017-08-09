@@ -11,7 +11,7 @@ use ClawRock\Slack\Logic\Response\Attachment\Attachment;
 /**
  * IMPORTANT! Setting fields via constructor, addData, mergeData, mergeDataBuilders will not validate input data.
  *
- * Class MessageDataBuilder
+ * Class ResponseBuilder
  * @package ClawRock\Slack\Fluent\Response
  */
 class ResponseBuilder extends AbstractBuilder implements MessageDataBuilderInterface
@@ -32,7 +32,7 @@ class ResponseBuilder extends AbstractBuilder implements MessageDataBuilderInter
     protected $delayUrl = null;
 
     /**
-     * MessageDataBuilder constructor.
+     * ResponseBuilder constructor.
      * @param array|null $data
      */
     public function __construct($data = [])
@@ -123,7 +123,10 @@ class ResponseBuilder extends AbstractBuilder implements MessageDataBuilderInter
 
     public function delay($url, $delayMessage = '')
     {
-        ob_end_clean();
+        if (ob_get_contents()) {
+            ob_end_clean();
+        }
+
         header("Connection: close\r\n");
         header("Content-Encoding: none\r\n");
         ignore_user_abort(true);
@@ -131,9 +134,22 @@ class ResponseBuilder extends AbstractBuilder implements MessageDataBuilderInter
         echo($delayMessage);
         $size = ob_get_length();
         header("Content-Length: $size");
-        ob_end_flush();
+
+        if (ob_get_contents()) {
+            ob_end_flush();
+        }
+
         flush();
-        ob_end_clean();
+
+        if (is_callable('fastcgi_finish_request')) {
+            session_write_close();
+            fastcgi_finish_request();
+        }
+
+        if (ob_get_contents()) {
+            ob_end_clean();
+        }
+
         $this->delayUrl = $url;
     }
 

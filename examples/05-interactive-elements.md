@@ -12,17 +12,17 @@ use ClawRock\Slack\Common\Enum\ActionStyle;
 $attachmentBuilder = SlackFactory::getAttachmentBuilder();
 $attachmentBuilder->setFallback('Simple fallback text')
     ->setCallbackId('asd_123')
-    ->createAction()
+    ->createButton()
         ->setName('action1')
         ->setText('Action #1 Button #1')
         ->setValue('action1_button1')
     ->end()
-    ->createAction()
+    ->createButton()
         ->setName('action1')
         ->setText('Action #1 Button #2')
         ->setValue('action1_button2')
     ->end()
-    ->createAction()
+    ->createButton()
         ->setName('action2')
         ->setText('Action #2 Button #1')
         ->setValue('action2_button1')
@@ -59,3 +59,54 @@ And if you click on the red one ("Action #2 Button #1) you will get the confirma
 ![Confirmation dialog for slack interactive button](images/05_button-confirm.png "Confirmation dialog for Action #2")
 
 **IMPORTANT!** As mentioned before, those buttons do not make any action yet. You need to create your own application to handle button communiation which will be covered in the next example.
+
+Interactive menus
+-------------------
+
+There are also another type of interactive element which is menu. You can create it like that:
+
+```php
+use ClawRock\Slack\SlackFactory;
+use ClawRock\Slack\Common\Enum\ActionStyle;
+
+$attachmentBuilder = SlackFactory::getAttachmentBuilder();
+$attachmentBuilder->setFallback('Simple fallback text')
+    ->setCallbackId('asd_123')
+    ->createMenu()
+        ->setText('text')
+        ->setName('name')
+        ->addOption('lorem', 'ipsum')
+        ->addOption('dolor', 'sit')
+        ->create();
+    ->end();
+``` 
+
+This will create menu with two options, lorem and dolor. 
+
+Instead of static source you can also use dynamic values. Currently there are 5 types of sources:
+
+'users', 'conversations', 'channels', 'external', 'static' 
+
+static is the default value. You can use it like this.
+
+```php
+use ClawRock\Slack\SlackFactory;
+use ClawRock\Slack\Common\Enum\ActionStyle;
+use ClawRock\Slack\Common\Enum\MenuSource;
+
+$attachmentBuilder = SlackFactory::getAttachmentBuilder();
+$attachmentBuilder->setFallback('Simple fallback text')
+    ->setCallbackId('asd_123')
+    ->createMenu()
+        ->setText('text')
+        ->setName('name')
+        ->setSource(MenuSource::CONVERSATIONS())
+        ->create();
+    ->end();
+``` 
+
+*REMEMBER* if you use source other than static, option values will not be available.
+
+
+In order to get more information about sources please refer to the [Slack API docs](https://api.slack.com/docs/message-menus);
+

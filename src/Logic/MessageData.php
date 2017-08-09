@@ -20,7 +20,15 @@ class MessageData implements \JsonSerializable
      */
     protected $content = [];
 
-    protected $responseType = null;
+    /**
+     * @var ResponseType
+     */
+    protected $responseType;
+
+    public function __construct()
+    {
+        $this->responseType = ResponseType::EPHEMERAL();
+    }
 
     /**
      * @param bool $withoutNulls
@@ -45,26 +53,6 @@ class MessageData implements \JsonSerializable
         $this->content = $content;
 
         return $this;
-    }
-
-    /**
-     * @param $array
-     * @return mixed
-     */
-    protected function removeNullsRecursive($array)
-    {
-        foreach ($array as $key => & $value) {
-            if (is_array($value)) {
-                $value = $this->removeNullsRecursive($value);
-            } else {
-                if (!(bool)$value) {
-                    unset($array[$key]);
-                }
-            }
-        }
-        unset($value);
-
-        return $array;
     }
 
     /**
@@ -108,6 +96,14 @@ class MessageData implements \JsonSerializable
     }
 
     /**
+     * @return ResponseType
+     */
+    public function getResponseType()
+    {
+        return $this->responseType;
+    }
+
+    /**
      * @param $url
      * @return Message
      */
@@ -123,7 +119,7 @@ class MessageData implements \JsonSerializable
     {
         $response = new Response($this);
         if (!is_null($this->responseType)) {
-            $response->setResponseType($this->responseType);
+            $this->setArgument('response_type', $this->responseType->getValue());
         }
         return $response;
     }
@@ -133,6 +129,28 @@ class MessageData implements \JsonSerializable
      */
     public function jsonSerialize()
     {
-        return $this->content;
+        $data                  = $this->content;
+        $data['response_type'] = $this->responseType->getValue();
+        return $data;
+    }
+
+    /**
+     * @param $array
+     * @return mixed
+     */
+    protected function removeNullsRecursive($array)
+    {
+        foreach ($array as $key => & $value) {
+            if (is_array($value)) {
+                $value = $this->removeNullsRecursive($value);
+            } else {
+                if (!(bool)$value) {
+                    unset($array[$key]);
+                }
+            }
+        }
+        unset($value);
+
+        return $array;
     }
 }

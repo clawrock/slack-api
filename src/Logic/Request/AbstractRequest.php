@@ -46,4 +46,12 @@ abstract class AbstractRequest implements RequestInterface
         }
         throw new \InvalidArgumentException('Parameter must be a string or null, ' . gettype($key) . ' provided.');
     }
+
+    /**
+     * @return string
+     */
+    public function getResponseUrl()
+    {
+        return $this->getRequestData('response_url');
+    }
 }

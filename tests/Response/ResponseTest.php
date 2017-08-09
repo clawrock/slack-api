@@ -14,7 +14,7 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
     {
         $response = new Response(new MessageData());
         $response->setResponseType(ResponseType::IN_CHANNEL());
-        $this->assertEquals('in_channel', $response->getResponseType());
+        $this->assertEquals(ResponseType::IN_CHANNEL(), $response->getResponseType());
     }
 
     public function test_serializing_data()

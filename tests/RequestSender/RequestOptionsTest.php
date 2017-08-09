@@ -36,7 +36,7 @@ class RequestOptionsTest extends \PHPUnit_Framework_TestCase
                 'http' => [
                     'header'  => Header::URL_UNENCODED,
                     'method'  => 'POST',
-                    'content' => '{"text":"text"}'
+                    'content' => '{"text":"text","response_type":"ephemeral"}'
                 ]
             ],
             $requestOptions->toArray()

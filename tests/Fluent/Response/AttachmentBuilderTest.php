@@ -90,7 +90,7 @@ class AttachmentBuilderTest extends \PHPUnit_Framework_TestCase
     public function test_setting_actions()
     {
         $attachmentBuilder = new AttachmentBuilder();
-        $attachmentBuilder->createAction()
+        $attachmentBuilder->createButton()
             ->setName('Sample name')
             ->setValue('Sample val')
             ->setText('Sample text')

@@ -3,13 +3,13 @@
 namespace ClawRock\Slack\Test\Fluent\Response;
 
 use ClawRock\Slack\Common\Enum\ActionStyle;
-use ClawRock\Slack\Fluent\Response\ActionBuilder;
+use ClawRock\Slack\Fluent\Response\Action\ButtonBuilder;
 
-class ActionBuilderTest extends \PHPUnit_Framework_TestCase
+class ButtonBuilderTest extends \PHPUnit_Framework_TestCase
 {
     public function test_setting_fields()
     {
-        $actionBuilder = new ActionBuilder();
+        $actionBuilder = new ButtonBuilder();
         $action        = $actionBuilder->setValue('value')
             ->setText('text')
             ->setName('name')
@@ -34,11 +34,11 @@ class ActionBuilderTest extends \PHPUnit_Framework_TestCase
 
     public function test_reset_data()
     {
-        $actionBuilder = new ActionBuilder();
+        $actionBuilder = new ButtonBuilder();
         $action        = $actionBuilder->setText('non default text')
             ->reset()
             ->create();
-        $this->assertContains('Action label', $action->getData());
+        $this->assertContains('Default name', $action->getData());
         $this->assertNotContains('non default text', $action->getData());
     }
 }

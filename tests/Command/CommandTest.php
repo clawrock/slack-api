@@ -5,8 +5,8 @@ namespace ClawRock\Slack\Test\Command;
 use ClawRock\Slack\Common\CommandParameters;
 use ClawRock\Slack\Common\Enum\Error;
 use ClawRock\Slack\Fluent\Guard\GuardDecorator;
-use ClawRock\Slack\Fluent\Response\ResponseBuilder;
 use ClawRock\Slack\Fluent\Response\MessageDataBuilderInterface;
+use ClawRock\Slack\Fluent\Response\ResponseBuilder;
 use ClawRock\Slack\Logic\Command\Command;
 use ClawRock\Slack\Logic\Request\RequestInterface;
 use ClawRock\Slack\Logic\Request\SlashRequest;
@@ -102,7 +102,7 @@ class CommandTest extends \PHPUnit_Framework_TestCase
 
     public function test_error_if_no_valid_parameters()
     {
-        $command = new Command();
+        $command     = new Command();
         $commandData = $command->__invoke($this->requestTest1U1, $this->response);
 
         $this->assertEquals(Error::NO_PARAMETER_MATCH, $commandData['Error']);

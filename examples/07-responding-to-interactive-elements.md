@@ -1,4 +1,18 @@
-Responding to buttons
+Responding to interactive elements
+---------------------
+
+Currently there are two types of interactive elements on slack.
+It is Menu and Button. In order to respond for the slack query you have to use following answers:
+
+```php
+SlackFactory::answer('action name');
+SlackFactory::buttonAnswer('action name', 'button value');
+SlackFactory::menuAnswer('action name', 'selected option value');
+```
+
+answer will respond if the action name is correct so you should you use if you do not know the action's value or your app uses dynamic values eg. user names.
+
+Advanced responding to buttons
 ---------------------
 
 For this example you need your own app with URL set up for Interactive Messages. If you don't have it already, please follow the steps under [Making your own app](06-making-your-own-app.md) example.
@@ -23,17 +37,17 @@ $slashCommand->run(function (RequestInterface $req, ResponseBuilder $res) {
     $res->setUsername('Morpheus')
         ->setEmoji('eyeglasses')
         ->setText('This is your last chance.')
-        ->setCallback('pill-question')
         ->createAttachment()
+            ->setCallbackId('pill-question')
             ->setText('After this, there is no turning back.')
-            ->createAction()
+            ->createButton()
                 ->setName('pills')
                 ->setText('Red pill')
                 ->setStyle(ActionStyle::DANGER())
                 ->setValue('red-pill')
                 ->setConfirm('Remember!', 'There is no turning back', 'I take it', 'I want to change')
             ->end()
-            ->createAction()
+            ->createButton()
                 ->setName('pills')
                 ->setText('Blue pill')
                 ->setStyle(ActionStyle::DEFAULT_STYLE())
@@ -91,24 +105,18 @@ If you click on "Red Pill" you will get confirmation dialog. Proceeding will sen
 Now you can respond to this request
 
 ```php
-use ClawRock\Slack\SlackFactory;
 
-$interactiveCommand = SlackFactory::interactiveCommand('your-command-token')
-    ->on('pill-question')
-    ->run(SlackFactory::answer('pills', 'blue-pill')
+//ADD COMMAND BELOW TO THE DISPATCHER USING ->addCommand($interactiveCommand);
+
+$interactiveCommand = SlackFactory::interactiveCommand('your-command-token');
+$interactiveCommand->on('pill-question')
+    ->run(SlackFactory::buttonAnswer('pills', 'blue-pill')
         ->setRun(function ($req, $res) {
             $res->setText('Neo took blue pill.');
         }))
-    ->run(SlackFactory::answer('pills', 'red-pill')
+    ->run(SlackFactory::buttonAnswer('pills', 'red-pill')
         ->setRun(function ($req, $res) {
             $res->setText('Neo took red pill.');
         }));
-
-$messageData = $dispatcher
-    ->addCommand($interactiveCommand)
-    ->dispatch(SlackFactory::getRequest())
-    ->create();
-
-$messageData->toResponse()->serve();
 ```
 

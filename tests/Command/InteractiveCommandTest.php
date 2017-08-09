@@ -3,7 +3,7 @@
 namespace ClawRock\Slack\Test\Command;
 
 use ClawRock\Slack\Fluent\Response\ResponseBuilder;
-use ClawRock\Slack\Logic\Command\Answer;
+use ClawRock\Slack\Logic\Command\InteractiveAnswer\Answer;
 use ClawRock\Slack\Logic\Command\InteractiveCommand;
 use ClawRock\Slack\Logic\Request\InteractiveRequest;
 
@@ -22,36 +22,17 @@ class InteractiveCommandTest extends \PHPUnit_Framework_TestCase
     public function test_interactive_answers()
     {
         $request = new InteractiveRequest($this->json);
-        $answer  = new Answer('war', 'war');
+        $answer  = new Answer('love');
+        $answer2 = new Answer('war');
         $command = new InteractiveCommand('token');
         $command->on('simple_callback')
             ->run($answer->setRun(function () {
-                return 'answer';
-            }));
-        $result = $command->__invoke($request, $this->response);
-        $this->assertContains('answer', $result);
-    }
-
-    public function test_interactive_multiple_answers()
-    {
-        $request = new InteractiveRequest($this->json);
-        $answer  = new Answer('war', 'war');
-        $answer2 = new Answer('not', 'exists');
-        $answer3 = new Answer('also', 'not-exists');
-        $command = new InteractiveCommand('token');
-        $command->on('simple_callback')
+                return 'invalid answer';
+            }))
             ->run($answer2->setRun(function () {
-                return 'answer2';
-            }))
-            ->run($answer->setRun(function () {
-                return 'answer';
-            }))
-            ->run($answer3->setRun(function () {
-                return 'answer3';
+                return 'proper answer';
             }));
         $result = $command->__invoke($request, $this->response);
-        $this->assertContains('answer', $result);
-        $this->assertNotContains('answer2', $result);
-        $this->assertNotContains('answer3', $result);
+        $this->assertContains('proper answer', $result);
     }
 }

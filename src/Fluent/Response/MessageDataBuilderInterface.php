@@ -4,9 +4,9 @@ namespace ClawRock\Slack\Fluent\Response;
 
 use ClawRock\Slack\Common\Builder\BuilderInterface;
 use ClawRock\Slack\Common\Enum\ResponseType;
+use ClawRock\Slack\Logic\Message;
 use ClawRock\Slack\Logic\MessageData;
 use ClawRock\Slack\Logic\Response\Attachment\Attachment;
-use ClawRock\Slack\Logic\Message;
 
 interface MessageDataBuilderInterface extends BuilderInterface
 {

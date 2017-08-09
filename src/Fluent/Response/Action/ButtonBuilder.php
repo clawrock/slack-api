@@ -1,12 +1,14 @@
 <?php
 
-namespace ClawRock\Slack\Fluent\Response;
+namespace ClawRock\Slack\Fluent\Response\Action;
 
-use ClawRock\Slack\Common\Builder\BuilderInterface;
 use ClawRock\Slack\Common\Enum\ActionStyle;
+use ClawRock\Slack\Common\Enum\ActionType;
+use ClawRock\Slack\Fluent\Response\AbstractBuilder;
+use ClawRock\Slack\Fluent\Response\AttachmentBuilder;
 use ClawRock\Slack\Logic\Response\Attachment\Action;
 
-class ActionBuilder extends AbstractBuilder implements BuilderInterface
+class ButtonBuilder extends AbstractBuilder
 {
     /**
      * @var AttachmentBuilder
@@ -19,14 +21,13 @@ class ActionBuilder extends AbstractBuilder implements BuilderInterface
     protected $action;
 
     /**
-     * ActionBuilder constructor.
+     * ButtonBuilder constructor.
      * @param AttachmentBuilder|null $parent
      */
     public function __construct(AttachmentBuilder $parent = null)
     {
         $this->parent = $parent;
         $this->makeDefault();
-        return $this;
     }
 
     /**
@@ -34,7 +35,7 @@ class ActionBuilder extends AbstractBuilder implements BuilderInterface
      */
     protected function makeDefault()
     {
-        $this->action = new Action('Default name', 'Action label', 'button');
+        $this->action = new Action(ActionType::BUTTON(), 'Default name', 'Default button label');
     }
 
     /**

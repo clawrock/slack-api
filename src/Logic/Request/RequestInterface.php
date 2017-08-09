@@ -43,4 +43,9 @@ interface RequestInterface
      * @return string
      */
     public function getCommandParameterString();
+
+    /**
+     * @return string
+     */
+    public function getResponseUrl();
 }

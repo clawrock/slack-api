@@ -112,6 +112,28 @@ class InteractiveRequest extends AbstractRequest
         return $this->getRequestData('actions');
     }
 
+    public function getValue()
+    {
+        return !empty($this->getActions()[0]['value'])
+            ? $this->getActions()[0]['value']
+            : null;
+    }
+
+    public function getSelectedOptions()
+    {
+        return !empty($this->getActions()[0]['selected_options'])
+            ? $this->getActions()[0]['selected_options']
+            : null;
+    }
+
+    public function getSelectedOptionValue()
+    {
+        $selectedOptions = $this->getSelectedOptions();
+        return !empty($selectedOptions[0]['value'])
+            ? $selectedOptions[0]['value']
+            : null;
+    }
+
     /**
      * @return string
      */

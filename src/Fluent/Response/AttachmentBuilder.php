@@ -4,6 +4,8 @@ namespace ClawRock\Slack\Fluent\Response;
 
 use ClawRock\Slack\Common\Builder\BuilderInterface;
 use ClawRock\Slack\Common\Enum\AttachmentColor;
+use ClawRock\Slack\Fluent\Response\Action\ButtonBuilder;
+use ClawRock\Slack\Fluent\Response\Action\MenuBuilder;
 use ClawRock\Slack\Logic\Response\Attachment\Action;
 use ClawRock\Slack\Logic\Response\Attachment\Attachment;
 use ClawRock\Slack\Logic\Response\Attachment\Field;
@@ -263,11 +265,19 @@ class AttachmentBuilder extends AbstractBuilder implements BuilderInterface
     }
 
     /**
-     * @return ActionBuilder
+     * @return ButtonBuilder
      */
-    public function createAction()
+    public function createButton()
     {
-        return new ActionBuilder($this);
+        return new ButtonBuilder($this);
+    }
+
+    /**
+     * @return MenuBuilder
+     */
+    public function createMenu()
+    {
+        return new MenuBuilder($this);
     }
 
     /**

@@ -5,9 +5,12 @@ namespace ClawRock\Slack;
 use ClawRock\Slack\Common\Exception\InvalidJsonException;
 use ClawRock\Slack\Fluent\Guard\GuardDecorator;
 use ClawRock\Slack\Fluent\Response\AttachmentBuilder;
-use ClawRock\Slack\Fluent\Response\ResponseBuilder;
 use ClawRock\Slack\Fluent\Response\MessageDataBuilderInterface;
-use ClawRock\Slack\Logic\Command\Answer;
+use ClawRock\Slack\Fluent\Response\ResponseBuilder;
+use ClawRock\Slack\Logic\Command\Command;
+use ClawRock\Slack\Logic\Command\InteractiveAnswer\Answer;
+use ClawRock\Slack\Logic\Command\InteractiveAnswer\ButtonAnswer;
+use ClawRock\Slack\Logic\Command\InteractiveAnswer\MenuAnswer;
 use ClawRock\Slack\Logic\Command\InteractiveCommand;
 use ClawRock\Slack\Logic\Command\SlashCommand;
 use ClawRock\Slack\Logic\Dispatcher;
@@ -16,7 +19,6 @@ use ClawRock\Slack\Logic\Request\InteractiveRequest;
 use ClawRock\Slack\Logic\Request\RequestInterface;
 use ClawRock\Slack\Logic\Request\SlashRequest;
 use ClawRock\Slack\Logic\RequestSender\StreamRequestSender;
-use ClawRock\Slack\Logic\Command\Command;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 
@@ -173,9 +175,19 @@ class SlackFactory
      * @param string $value
      * @return Answer
      */
-    public static function answer($name, $value)
+    public static function answer($name)
     {
-        return new Answer($name, $value);
+        return new Answer($name);
+    }
+
+    public function buttonAnswer($name, $value)
+    {
+        return new ButtonAnswer($name, $value);
+    }
+
+    public function menuAnswer($name, $value)
+    {
+        return new MenuAnswer($name, $value);
     }
 
     /**

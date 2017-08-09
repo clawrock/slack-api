@@ -3,6 +3,7 @@
 namespace ClawRock\Slack\Logic;
 
 use ClawRock\Slack\Common\Enum\Header;
+use ClawRock\Slack\Common\Enum\ResponseType;
 use ClawRock\Slack\Common\SendableInterface;
 use ClawRock\Slack\Logic\RequestSender\RequestOptions;
 use ClawRock\Slack\Logic\RequestSender\RequestSenderInterface;
@@ -37,6 +38,25 @@ class Message implements SendableInterface
     {
         $this->requestSender = $requestSender;
         return $this;
+    }
+
+    /**
+     * @param ResponseType $responseType
+     * @return $this
+     */
+    public function setResponseType(ResponseType $responseType)
+    {
+        $this->messageData->setArgument('response_type', $responseType->getValue());
+        return $this;
+    }
+
+    /**
+     * Returns type of response
+     * @return string
+     */
+    public function getResponseType()
+    {
+        return $this->messageData->getArgument('response_type');
     }
 
     /**

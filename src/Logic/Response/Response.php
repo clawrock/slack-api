@@ -20,7 +20,6 @@ class Response implements \JsonSerializable, SendableInterface
     public function __construct(MessageData $messageData)
     {
         $this->messageData = $messageData;
-        $this->setResponseType(ResponseType::EPHEMERAL());
     }
 
     /**
@@ -29,18 +28,18 @@ class Response implements \JsonSerializable, SendableInterface
      */
     public function setResponseType(ResponseType $responseType)
     {
-        $this->messageData->setArgument('response_type', $responseType->getValue());
+        $this->messageData->setResponseType($responseType);
         return $this;
     }
 
     /**
      * Returns type of response.
      *
-     * @return string
+     * @return ResponseType
      */
     public function getResponseType()
     {
-        return $this->messageData->getArgument('response_type');
+        return $this->messageData->getResponseType();
     }
 
     /**

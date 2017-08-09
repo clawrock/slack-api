@@ -36,9 +36,9 @@ class SlashCommand extends Command implements DispatcherCommandInterface
             }
         }
 
-        $this->token                     = $token;
-        $this->command                   = $command;
-        $this->allowedRequestType        = RequestType::SLASH_COMMAND();
+        $this->token              = $token;
+        $this->command            = $command;
+        $this->allowedRequestType = RequestType::SLASH_COMMAND();
         parent::__construct();
     }
 

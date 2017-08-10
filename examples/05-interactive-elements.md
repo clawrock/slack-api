@@ -77,15 +77,15 @@ $attachmentBuilder->setFallback('Simple fallback text')
         ->setName('name')
         ->addOption('lorem', 'ipsum')
         ->addOption('dolor', 'sit')
-        ->create();
+        ->end()
     ->end();
-``` 
+```
 
-This will create menu with two options, lorem and dolor. 
+This will create menu with two options, lorem and dolor.
 
 Instead of static source you can also use dynamic values. Currently there are 5 types of sources:
 
-'users', 'conversations', 'channels', 'external', 'static' 
+'users', 'conversations', 'channels', 'external', 'static'
 
 static is the default value. You can use it like this.
 
@@ -101,9 +101,9 @@ $attachmentBuilder->setFallback('Simple fallback text')
         ->setText('text')
         ->setName('name')
         ->setSource(MenuSource::CONVERSATIONS())
-        ->create();
+        ->end()
     ->end();
-``` 
+```
 
 *REMEMBER* if you use source other than static, option values will not be available.
 

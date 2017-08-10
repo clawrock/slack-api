@@ -1,5 +1,11 @@
 # Release Notes
 
+# v1.5.4 (2017-08-10)
+
+### Fixed
+- Fixed interactive element examples
+- Fixed removed by accident \JsonSerializable from list of implemented Action's interfaces
+
 ## v1.5.2 (2017-08-09)
 
 ### Added

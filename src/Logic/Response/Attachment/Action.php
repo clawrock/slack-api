@@ -4,7 +4,7 @@ namespace ClawRock\Slack\Logic\Response\Attachment;
 
 use ClawRock\Slack\Common\Enum\ActionType;
 
-class Action
+class Action implements \JsonSerializable
 {
     /**
      * @var array

@@ -52,6 +52,9 @@ class ResponseBuilder extends AbstractBuilder implements MessageDataBuilderInter
         return $this;
     }
 
+    /**
+     * @param ResponseType $responseType
+     */
     public function setResponseType(ResponseType $responseType)
     {
         $this->responseType = $responseType;

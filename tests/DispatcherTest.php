@@ -24,7 +24,7 @@ class DispatcherTest extends \PHPUnit_Framework_TestCase
             'user_id' => 'U1'
         ]);
         $json                     =
-            ['payload' => '{"actions":[{"name":"war","value":"war"}],"callback_id":"simple_callback","team":{"id":"a1x4556","domain":"clawrock"},"channel":{"id":"G3K8U4QUQ","name":"privategroup"},"user":{"id":"U3KMAQQTT","name":"office"},"action_ts":"1485333856.717065","message_ts":"1485333853.000003","attachment_id":"1","token":"TOKEN1","response_url":"https:\/\/hooks.slack.com\/actions\/T0DTKPES3\/131465735312\/PxHkAV9fIQn7iaEIqisWa5Co"}'];
+            ['payload' => '{"actions":[{"name":"war","value":"war"}],"callback_id":"simple_callback","team":{"id":"a1x4556","domain":"prowebsoftware"},"channel":{"id":"G3K8U4QUQ","name":"privategroup"},"user":{"id":"U3KMAQQTT","name":"lsitarski"},"action_ts":"1485333856.717065","message_ts":"1485333853.000003","attachment_id":"1","token":"TOKEN1","response_url":"https:\/\/hooks.slack.com\/actions\/T0DTKPES3\/131465735312\/PxHkAV9fIQn7iaEIqisWa5Co"}'];
         $this->interactiveRequest = new InteractiveRequest($json);
     }
 
@@ -185,4 +185,36 @@ class DispatcherTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('default function', $slashDataBuilder->getData()['text']);
     }
 
+    public function test_adding_attachments_with_actions_to_response(){
+        $dispatcher     = new Dispatcher();
+        $helpCommand    = new SlashCommand('action-token', '/action');
+        $request        = new SlashRequest([
+            'command' => '/action',
+            'token'   => 'action-token',
+            'user_id' => 'U1'
+        ]);
+
+        $dispatcherObject = $dispatcher->addCommand(
+            $helpCommand->run(function ($req, $res) {
+                $res->setText('test')
+                    ->createAttachment()
+                    ->setCallbackId('call')
+                    ->setText('call text')
+                    ->createMenu()
+                    ->setText('text')
+                    ->setName('name')
+                    ->addOption('lorem', 'ipsum')
+                    ->addOption('dolor', 'sit')
+                    ->end()
+                    ->end();
+            }));
+
+        $slashDataBuilder = $dispatcherObject->dispatch($request);
+        $expectedString = '{"text":"test","attachments":[{"fallback":"Default fallback message","callback_id":"call"';
+        $expectedString .= ',"text":"call text","actions":[{"name":"name","text":"text","type":"select","data_source":';
+        $expectedString .='"static","options":[{"text":"lorem","value":"ipsum"},{"text":"dolor","value":"sit"}]}]}],';
+        $expectedString .= '"response_type":"ephemeral"}';
+
+        $this->assertEquals($expectedString, json_encode($slashDataBuilder->create()));
+    }
 }

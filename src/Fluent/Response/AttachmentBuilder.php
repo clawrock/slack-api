@@ -10,7 +10,7 @@ use ClawRock\Slack\Logic\Response\Attachment\Action;
 use ClawRock\Slack\Logic\Response\Attachment\Attachment;
 use ClawRock\Slack\Logic\Response\Attachment\Field;
 
-class AttachmentBuilder extends AbstractBuilder implements BuilderInterface
+class AttachmentBuilder extends AbstractBuilder
 {
     /**
      * @var array
@@ -282,6 +282,7 @@ class AttachmentBuilder extends AbstractBuilder implements BuilderInterface
 
     /**
      * @param Action $action
+     * @return AttachmentBuilder
      */
     public function addAction(Action $action)
     {

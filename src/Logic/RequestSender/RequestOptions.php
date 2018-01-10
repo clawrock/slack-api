@@ -14,17 +14,18 @@ class RequestOptions
 
     /**
      * RequestOptions constructor.
-     * @param string $content
+     * @param Header $header
+     * @param string|array $content
      */
     public function __construct(Header $header, $content)
     {
-        if (!is_string($content)) {
-            throw new \InvalidArgumentException('Parameter must be a string, ' . gettype($content) . ' provided');
+        if (!is_string($content) && !is_array($content)) {
+            throw new \InvalidArgumentException('Parameter must be a string or array, ' . gettype($content) . ' provided');
         }
         $this->data = [
             'header'  => $header->getValue(),
             'method'  => 'POST',
-            'content' => $content
+            'content' => $content,
         ];
     }
 
@@ -57,6 +58,15 @@ class RequestOptions
     }
 
     /**
+     * @return string
+     */
+    public function getContentString()
+    {
+        $content = $this->getContent();
+        return is_string($content) ? $content : http_build_query($content);
+    }
+
+    /**
      * @param RequestMethod $requestMethod
      * @return $this
      */
@@ -67,7 +77,7 @@ class RequestOptions
     }
 
     /**
-     * Returns array wrapped in 'http' key and content encoded in json.
+     * Returns array wrapped in 'http' key and content query
      *
      * @return array
      */
@@ -77,8 +87,8 @@ class RequestOptions
             'http' => [
                 'header'  => $this->getHeader(),
                 'method'  => $this->getMethod(),
-                'content' => $this->getContent()
-            ]
+                'content' => $this->getContentString(),
+            ],
         ];
     }
 
@@ -99,7 +109,7 @@ class RequestOptions
     }
 
     /**
-     * @return string
+     * @return string|array
      */
     public function getContent()
     {

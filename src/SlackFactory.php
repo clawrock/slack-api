@@ -7,6 +7,7 @@ use ClawRock\Slack\Fluent\Guard\GuardDecorator;
 use ClawRock\Slack\Fluent\Response\AttachmentBuilder;
 use ClawRock\Slack\Fluent\Response\MessageDataBuilderInterface;
 use ClawRock\Slack\Fluent\Response\ResponseBuilder;
+use ClawRock\Slack\Fluent\Response\SnippetBuilder;
 use ClawRock\Slack\Logic\Command\Command;
 use ClawRock\Slack\Logic\Command\InteractiveAnswer\Answer;
 use ClawRock\Slack\Logic\Command\InteractiveAnswer\ButtonAnswer;
@@ -55,6 +56,15 @@ class SlackFactory
     public static function getMessageService($url)
     {
         return new Message(self::getRequestSender($url));
+    }
+
+    /**
+     * @param string $token
+     * @return SnippetBuilder
+     */
+    public static function snippet($token)
+    {
+        return new SnippetBuilder($token);
     }
 
     /**
@@ -180,12 +190,22 @@ class SlackFactory
         return new Answer($name);
     }
 
-    public function buttonAnswer($name, $value)
+    /**
+     * @param        $name
+     * @param string $value
+     * @return ButtonAnswer
+     */
+    public static function buttonAnswer($name, $value = '')
     {
         return new ButtonAnswer($name, $value);
     }
 
-    public function menuAnswer($name, $value)
+    /**
+     * @param        $name
+     * @param string $value
+     * @return MenuAnswer
+     */
+    public static function menuAnswer($name, $value = '')
     {
         return new MenuAnswer($name, $value);
     }
